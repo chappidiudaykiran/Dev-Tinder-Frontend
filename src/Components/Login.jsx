@@ -47,7 +47,7 @@ const Login = () => {
 
       console.log("Logged-in user full data:", loggedInUser);
       dispatch(addUser(loggedInUser));
-      navigate("/");
+      navigate("/feed");
     } catch (error) {
       console.error("Login failed:", error?.response?.data || error.message);
       const serverMessage = error?.response?.data?.message;
