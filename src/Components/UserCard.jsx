@@ -1,4 +1,12 @@
-const UserCard = ({ person }) => {
+const UserCard = ({
+  person,
+  onIgnore,
+  onInterested,
+  ignoreLabel = 'Ignore',
+  interestedLabel = 'Interested',
+  isActionLoading = false,
+  showActions = true,
+}) => {
   const fullName = [person.firstName, person.lastName].filter(Boolean).join(' ')
   const subtitle = [person.age, person.gender].filter(Boolean).join(', ')
   const skills = Array.isArray(person.skills) ? person.skills : []
@@ -29,14 +37,26 @@ const UserCard = ({ person }) => {
           </div>
         ) : null}
 
-        <div className="card-actions mt-3 justify-end gap-2">
-          <button type="button" className="btn btn-sm border-sky-300 bg-sky-200 text-sky-900 hover:bg-sky-300">
-            Ignore
-          </button>
-          <button type="button" className="btn btn-sm border-pink-300 bg-pink-200 text-pink-900 hover:bg-pink-300">
-            Interested
-          </button>
-        </div>
+        {showActions ? (
+          <div className="card-actions mt-3 justify-end gap-2">
+            <button
+              type="button"
+              className="btn btn-sm border-sky-300 bg-sky-200 text-sky-900 hover:bg-sky-300"
+              onClick={onIgnore}
+              disabled={isActionLoading || !onIgnore}
+            >
+              {ignoreLabel}
+            </button>
+            <button
+              type="button"
+              className="btn btn-sm border-pink-300 bg-pink-200 text-pink-900 hover:bg-pink-300"
+              onClick={onInterested}
+              disabled={isActionLoading || !onInterested}
+            >
+              {interestedLabel}
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   )

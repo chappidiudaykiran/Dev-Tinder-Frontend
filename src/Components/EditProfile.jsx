@@ -176,7 +176,7 @@ const EditProfile = () => {
         </div>
       </div>
       <div style={{ maxWidth: 288, marginTop: '2.9em' }}>
-        <UserCard person={previewPerson} />
+        <UserCard person={previewPerson} showActions={false} />
       </div>
     </div>
   );

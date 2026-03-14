@@ -24,4 +24,10 @@
  - Edit Profile feature
  - Show Toast message on saved of edit profile
  - See all my Connections
+ - See all my Connections Requests
+ - Feauture Accept/Reject connection Request
+ - 
+ - send/ignore the user card from feed
+ - signup New user
+ - E2Etesting
 

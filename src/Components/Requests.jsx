@@ -93,6 +93,8 @@ const Requests = () => {
   const [requests, setRequests] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [reviewingRequestId, setReviewingRequestId] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -176,6 +178,13 @@ const Requests = () => {
 
   const requestList = Array.isArray(requests) ? requests : []
 
+  const getRequestId = (item) => {
+    if (!item || typeof item !== 'object') {
+      return null
+    }
+    return item._id || item.requestId || item.id || null
+  }
+
   const normalizeRequester = (item) => {
     if (!item || typeof item !== 'object') {
       return null
@@ -223,7 +232,42 @@ const Requests = () => {
     return person ? { ...person, _id: person._id || item._id } : null
   }
 
-  const people = requestList.map(normalizeRequester).filter(Boolean)
+  const requestCards = requestList
+    .map((item) => ({
+      requestId: getRequestId(item),
+      person: normalizeRequester(item),
+    }))
+    .filter((card) => card.person && card.requestId)
+
+  const handleReviewRequest = async (status, requestId) => {
+    if (!requestId) {
+      return
+    }
+
+    setError('')
+    setSuccessMessage('')
+    setReviewingRequestId(requestId)
+
+    try {
+      await axios.post(`${BASE_URL}/request/review/${status}/${requestId}`, {}, {
+        withCredentials: true,
+      })
+
+      const updatedRequests = requestList.filter((item) => getRequestId(item) !== requestId)
+      setRequests(updatedRequests)
+      dispatch(addRequest(updatedRequests))
+
+      setSuccessMessage(`Request ${status} successfully.`)
+      setTimeout(() => {
+        setSuccessMessage('')
+      }, 1500)
+    } catch (err) {
+      const serverMessage = err?.response?.data?.message
+      setError(serverMessage || `Failed to mark request as ${status}.`)
+    } finally {
+      setReviewingRequestId('')
+    }
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
@@ -232,17 +276,21 @@ const Requests = () => {
 
       {isLoading ? <p className="mt-6 text-sm">Loading requests...</p> : null}
       {error ? <p className="mt-6 text-sm text-error">{error}</p> : null}
+      {successMessage ? <p className="mt-6 text-sm text-success">{successMessage}</p> : null}
 
-      {!isLoading && !error && people.length === 0 ? (
+      {!isLoading && !error && requestCards.length === 0 ? (
         <p className="mt-6 text-sm text-base-content/70">No requests found.</p>
       ) : null}
 
-      {!isLoading && !error && people.length > 0 ? (
+      {!isLoading && !error && requestCards.length > 0 ? (
         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {people.map((person) => (
+          {requestCards.map(({ requestId, person }) => (
             <UserCard
-              key={person._id || person.emailId || [person.firstName, person.lastName].filter(Boolean).join(' ')}
+              key={requestId}
               person={person}
+              onIgnore={() => handleReviewRequest('rejected', requestId)}
+              onInterested={() => handleReviewRequest('accepted', requestId)}
+              isActionLoading={reviewingRequestId === requestId}
             />
           ))}
         </div>

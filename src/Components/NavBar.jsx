@@ -41,6 +41,7 @@ const NavBar = () => {
               <ul
                 tabIndex="-1"
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow mx-5">
+                <li><Link to="/feed">Home</Link></li>
                 <li>
                   <Link to="/profile" className="justify-between">
                     Profile

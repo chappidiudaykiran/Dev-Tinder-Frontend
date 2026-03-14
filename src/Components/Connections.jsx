@@ -112,6 +112,7 @@ const Connections = () => {
             <UserCard
               key={person._id || person.emailId || [person.firstName, person.lastName].filter(Boolean).join(' ')}
               person={person}
+              showActions={false}
             />
           ))}
         </div>
