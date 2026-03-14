@@ -285,13 +285,19 @@ const Requests = () => {
       {!isLoading && !error && requestCards.length > 0 ? (
         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {requestCards.map(({ requestId, person }) => (
-            <UserCard
-              key={requestId}
-              person={person}
-              onIgnore={() => handleReviewRequest('rejected', requestId)}
-              onInterested={() => handleReviewRequest('accepted', requestId)}
-              isActionLoading={reviewingRequestId === requestId}
-            />
+            <div key={requestId} className="mx-auto h-96 w-64 max-w-full">
+              <UserCard
+                person={person}
+                onIgnore={() => handleReviewRequest('rejected', requestId)}
+                onInterested={() => handleReviewRequest('accepted', requestId)}
+                isActionLoading={reviewingRequestId === requestId}
+                ignoreLabel="Ignore"
+                interestedLabel="Interested"
+                actionClassName="w-full !justify-center gap-6"
+                ignoreButtonClassName="btn-sm px-4"
+                interestedButtonClassName="btn-sm px-4"
+              />
+            </div>
           ))}
         </div>
       ) : null}

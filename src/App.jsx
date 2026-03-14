@@ -63,6 +63,10 @@ function App() {
           element={user ? <Navigate to='/feed' replace /> : <Login />}
         />
         <Route
+          path='/signup'
+          element={user ? <Navigate to='/feed' replace /> : <Login />}
+        />
+        <Route
           path='/'
           element={user ? <Body /> : <Navigate to='/login' replace />}
         >
