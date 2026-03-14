@@ -4,6 +4,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Body from './Components/Body'
 import Login from './Components/Login'
 import Profile from './Components/Profile'
+import Connections from './Components/Connections'
+import Requests from './Components/Requests'
 import { useDispatch, useSelector } from 'react-redux'
 import Feed from './Components/Feed'
 import { BASE_URL } from './utils/constants'
@@ -66,6 +68,8 @@ function App() {
         >
           <Route path='feed' element={<Feed />} />
           <Route path='profile' element={<Profile />} />
+          <Route path='connections' element={<Connections />} />
+          <Route path='requests' element={<Requests />} />
         </Route>
         <Route
           path='*'

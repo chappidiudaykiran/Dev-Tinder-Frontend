@@ -19,5 +19,9 @@
  - you should not be acess other routes without login
  - if token is not present redirect user to login page
  - Logout Feature
- - Profile
+ - Get the feed and feed in the store
+ - Build user card in feed
+ - Edit Profile feature
+ - Show Toast message on saved of edit profile
+ - See all my Connections
 
