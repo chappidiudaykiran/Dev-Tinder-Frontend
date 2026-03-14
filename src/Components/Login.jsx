@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BASE_URL } from "../utils/constants";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
@@ -85,8 +86,8 @@ const Login = () => {
                 autoComplete="current-password"
               />
             </fieldset>
-            {error ? <p className="mt-2 text-sm text-error">{error}</p> : null}
           </div>
+          <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn btn-primary" type="submit" disabled={isLoading}>
               {isLoading ? "Logging in..." : "Login"}
