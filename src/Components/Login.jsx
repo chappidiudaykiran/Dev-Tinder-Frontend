@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
+import styles from "./Login3D.module.css";
 
 const Login = () => {
   const [isSignupMode, setIsSignupMode] = useState(false);
@@ -139,81 +140,78 @@ const Login = () => {
   };
 
   return (
-    <div className="justify-items-center my-10">
-      <div className="card bg-base-200 w-96 shadow-sm">
-        <form className="card-body" onSubmit={isSignupMode ? handleSignup : handleLogin}>
-          <h2 className="card-title justify-center">{isSignupMode ? "Create Account" : "Login"}</h2>
-
+    <div className={styles.login3dContainer}>
+      <div className={styles.login3dCard}>
+        <form onSubmit={isSignupMode ? handleSignup : handleLogin}>
+          <h2 className={styles.login3dTitle}>{isSignupMode ? "Create Account" : "Login"}</h2>
           <div>
-            {isSignupMode ? (
+            {isSignupMode && (
               <>
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">First Name</legend>
+                <fieldset className={styles.login3dFieldset}>
+                  <label className={styles.login3dLabel}>First Name</label>
                   <input
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="input"
+                    className={styles.login3dInput}
                     placeholder="First name"
                     autoComplete="given-name"
                   />
                 </fieldset>
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">Last Name</legend>
+                <fieldset className={styles.login3dFieldset}>
+                  <label className={styles.login3dLabel}>Last Name</label>
                   <input
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="input"
+                    className={styles.login3dInput}
                     placeholder="Last name"
                     autoComplete="family-name"
                   />
                 </fieldset>
               </>
-            ) : null}
-
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Email ID</legend>
+            )}
+            <fieldset className={styles.login3dFieldset}>
+              <label className={styles.login3dLabel}>Email ID</label>
               <input
                 type="email"
                 value={emailId}
                 onChange={(e) => setEmailId(e.target.value)}
-                className="input"
+                className={styles.login3dInput}
                 placeholder="Type here"
                 autoComplete="email"
               />
             </fieldset>
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Password</legend>
+            <fieldset className={styles.login3dFieldset}>
+              <label className={styles.login3dLabel}>Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="input"
+                className={styles.login3dInput}
                 placeholder="Type here"
                 autoComplete="current-password"
               />
             </fieldset>
-
-            {isSignupMode ? (
+            {isSignupMode && (
               <>
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">Age</legend>
+                <fieldset className={styles.login3dFieldset}>
+                  <label className={styles.login3dLabel}>Age</label>
                   <input
                     type="number"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
-                    className="input"
+                    className={styles.login3dInput}
                     placeholder="Your age"
                     min="18"
                   />
                 </fieldset>
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">Gender</legend>
+                <fieldset className={styles.login3dFieldset}>
+                  <label className={styles.login3dLabel}>Gender</label>
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    className="select"
+                    className={styles.login3dSelect}
                   >
                     <option value="">Select gender</option>
                     <option value="Male">Male</option>
@@ -221,57 +219,48 @@ const Login = () => {
                     <option value="Other">Other</option>
                   </select>
                 </fieldset>
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">Photo URL</legend>
+                <fieldset className={styles.login3dFieldset}>
+                  <label className={styles.login3dLabel}>Photo URL</label>
                   <input
                     type="url"
                     value={photoUrl}
                     onChange={(e) => setPhotoUrl(e.target.value)}
-                    className="input"
+                    className={styles.login3dInput}
                     placeholder="https://..."
                   />
                 </fieldset>
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">About</legend>
+                <fieldset className={styles.login3dFieldset}>
+                  <label className={styles.login3dLabel}>About</label>
                   <textarea
                     value={about}
                     onChange={(e) => setAbout(e.target.value)}
-                    className="textarea"
+                    className={styles.login3dTextarea}
                     placeholder="Tell about yourself"
                   />
                 </fieldset>
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">Skills</legend>
+                <fieldset className={styles.login3dFieldset}>
+                  <label className={styles.login3dLabel}>Skills</label>
                   <input
                     type="text"
                     value={skills}
                     onChange={(e) => setSkills(e.target.value)}
-                    className="input"
+                    className={styles.login3dInput}
                     placeholder="React, Node.js, MongoDB"
                   />
                 </fieldset>
               </>
-            ) : null}
+            )}
           </div>
-          <p className="text-red-500">{error}</p>
-          {success ? <p className="text-green-600">{success}</p> : null}
-          <div className="card-actions justify-center">
-            <button className="btn btn-primary" type="submit" disabled={isLoading}>
-              {isLoading
-                ? (isSignupMode ? "Signing up..." : "Logging in...")
-                : (isSignupMode ? "Sign Up" : "Login")}
-            </button>
-          </div>
-          <p className="text-center text-sm text-base-content/70">
-            {isSignupMode ? "Already have an account?" : "Don\'t have an account?"}{" "}
-            <button
-              type="button"
-              className="link link-primary font-medium"
-              onClick={() => switchMode(!isSignupMode)}
-            >
-              {isSignupMode ? "Login" : "Create it"}
-            </button>
-          </p>
+          {error && <p className={styles.login3dError}>{error}</p>}
+          {success && <p className={styles.login3dSuccess}>{success}</p>}
+          <button className={styles.login3dBtn} type="submit" disabled={isLoading}>
+            {isLoading
+              ? (isSignupMode ? "Signing up..." : "Logging in...")
+              : (isSignupMode ? "Sign Up" : "Login")}
+          </button>
+          <span className={styles.login3dLink} onClick={() => switchMode(!isSignupMode)}>
+            {isSignupMode ? "Already have an account? Login" : "Don't have an account? Create it"}
+          </span>
         </form>
       </div>
     </div>
