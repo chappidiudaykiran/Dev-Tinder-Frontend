@@ -130,7 +130,8 @@ const Login = () => {
 
       setSuccess("Signup successful! Please sign in now.");
       setPassword("");
-      switchMode(false);
+      setIsSignupMode(false);
+      navigate("/login");
     } catch (signupError) {
       const serverMessage = signupError?.response?.data?.message || signupError?.response?.data;
       setError(serverMessage || "Signup failed. Please try again.");
